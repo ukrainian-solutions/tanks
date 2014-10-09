@@ -40,7 +40,9 @@ io.on 'connection', (socket)=>
     fn socket.tank.toJson()
 
   socket.on 'disconnect', ->
-    if socket.tank != undefined then controller.removeTank socket.tank
+    if socket.tank != undefined
+      io.sockets.emit 'tankDestroy', socket.tank.id
+      controller.removeTank socket.tank
 
   socket.on 'map', (fn)->
     console.log 'map'
