@@ -11,6 +11,8 @@ class Tank
   bullets: 0  # how many bullets in map now
   bullets_max: 3  # how many bullets can be on map
   health: 9  # if tank was shuted healts - 1. If ==0 tank is dead
+  respawn_after: 10
+  respawn_i: -1
 
   place_on_map: [3, 1]  # [x, y]
 
@@ -18,7 +20,10 @@ class Tank
 
   ## return yes is tank was moved or one of property changed
   move: ->
-    if @health <= 0 then return no
+    if @health <= 0
+      if @respawn_i == 0 then @health = 9
+      @respawn_i = @respawn_i - 1
+      return no
     if @is_hold then return no
     if @wait > 0
       @wait = @wait - 1
@@ -66,6 +71,7 @@ class Tank
     console.log @id, 'was demaged by ', tank.id
     if @health > 0
       @health = @health - 1
+      if @health == 0 then @respawn_i = @respawn_after
 
 
   toJson: ->

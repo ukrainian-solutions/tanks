@@ -15,12 +15,27 @@ app.get '/', (req, res, next) -> res.sendFile __dirname + '/frontend/index.html'
 app.use '/bower', express.static(__dirname + '/bower_components')
 app.use '/', express.static(__dirname + '/frontend')
 
-bot = new Tank 0
+
 directions = ['left', 'right', 'up', 'down']
-controller.appendTank bot
+bot1 = new Tank 0
+controller.appendTank bot1
 setInterval ->
-  bot.direction = directions[Math.floor (Math.random() * 4) + 1]
-  bot.is_hold = no
+  bot1.direction = directions[Math.floor (Math.random() * 4) + 1]
+  bot1.is_hold = no
+, 2000
+
+bot2 = new Tank 1
+controller.appendTank bot2
+setInterval ->
+  bot2.direction = directions[Math.floor (Math.random() * 4) + 1]
+  bot2.is_hold = no
+, 2000
+
+bot3 = new Tank 2
+controller.appendTank bot3
+setInterval ->
+  bot3.direction = directions[Math.floor (Math.random() * 4) + 1]
+  bot3.is_hold = no
 , 2000
 
 io.on 'connection', (socket)=>
