@@ -23,10 +23,13 @@ class Map
 
   getMap: -> return @map
 
-  getTile: (x,y)-> return @map[y][x]
+  getTile: (x,y)->
+    if @map[y] is undefined then return console.log 'Cant find Y in map with index', y, @maxY()
+    if @map[y][x] is undefined then return console.log 'Cand find X in map with index', x, @maxX(), 'and Y is', y
+    return @map[y][x]
 
-  maxX: -> @map[0].length
-  maxY: -> @map.length
+  maxX: -> @map[0].length - 1
+  maxY: -> @map.length - 1
 
 map = new Map
 

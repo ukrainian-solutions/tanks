@@ -15,7 +15,7 @@ app.get '/', (req, res, next) -> res.sendFile __dirname + '/frontend/index.html'
 app.use '/bower', express.static(__dirname + '/bower_components')
 app.use '/', express.static(__dirname + '/frontend')
 
-controller.appendTank new Tank 0
+# controller.appendTank new Tank 0
 
 io.on 'connection', (socket)=>
 

@@ -22,7 +22,7 @@ class Controller
         tank.move()
         tanks.push tank.toJson()
       @io.sockets.emit 'tanks', tanks
-    , 1000
+    , 50
 
   stop: ->
     clearInterval @tanks_interval

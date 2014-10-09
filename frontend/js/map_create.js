@@ -119,7 +119,7 @@ $(document).ready(function() {
     });
 
     socket.on('tanks', function(tanks) {
-       console.log(tanks[1].place_on_map);
+       // console.log(tanks[1].place_on_map);
        for (var _i = 0, _len = tanks.length; _i < _len; _i++) {
             var tank = tanks[_i];
             move_tank(tank);

@@ -39,7 +39,7 @@ class Tank
       return yes
 
     on_map = controller.whatOnTile x, y
-
+    console.log 'on map', on_map
     if not on_map
       tile = map.getTile x, y
       if tile is 0
