@@ -86,7 +86,9 @@ $(document).ready(function() {
 
     function move_tank(tank_json) {
         var tank = $('[data-id_tank='+tank_json['id']+']');
-        tank.removeClass()
+        tank.removeClass();
+        tank.addClass('box');
+        draw_tank(tank_json)
     }
 
 
