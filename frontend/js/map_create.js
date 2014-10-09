@@ -73,9 +73,11 @@ $(document).ready(function() {
     function start_game() {
         socket.emit('addTank', function(tank_json) {
             console.log('this is tank', tank_json);
+            my_tank = tank_json['id'];
             draw_tank(tank_json)
         });
     }
+    start_game();
 
     function draw_tank(tank_json) {
         var y = tank_json['place_on_map'][0];
@@ -151,7 +153,6 @@ $(document).ready(function() {
             draw_tank(tank);
        }
     });
-    $('#start_game').on('click', start_game());
 
 
 
