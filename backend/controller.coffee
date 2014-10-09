@@ -12,7 +12,7 @@ class Controller
   whatOnTile: (x,y)->
     console.log 'tanks', @tanks
     for tank in @tanks then if tank.place_on_map == [x,y] then return ['tank', tank]
-    for bullet in @bullets then if bullen.place_on_map == [x,y] then return ['bullet', bullet]
+    for bullet in @bullets then if bullet.place_on_map == [x,y] then return ['bullet', bullet]
     return no
 
   start: -> if @tanks_interval is no
