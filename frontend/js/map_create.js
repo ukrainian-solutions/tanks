@@ -80,7 +80,6 @@ $(document).ready(function() {
     start_game();
 
     function draw_tank(tank_json) {
-        console.log(tank_json);
         var y = tank_json['place_on_map'][0];
         var x = tank_json['place_on_map'][1];
         var div = $('*[data-x='+x.toString()+'][data-y='+ y.toString()+']');
