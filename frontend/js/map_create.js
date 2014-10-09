@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+    var my_tank = 0;
     var map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
@@ -81,12 +83,24 @@ $(document).ready(function() {
         var div = $('*[data-x='+x.toString()+'][data-y='+ y.toString()+']');
 //        div.removeClass();
         div.attr('data-id_tank', tank_json['id']);
-        div.addClass('tank');
+        div.html(tank_json['health']);
+        if(tank_json['id'] == my_tank) {
+            div.addClass('my_tank');
+        }
+        else {
+            div.addClass('tank');
+        }
     }
 
     function move_tank(tank_json) {
         var tank = $('[data-id_tank='+tank_json['id']+']');
-        tank.removeClass('tank');
+        tank.html('');
+        if(tank_json['id'] == my_tank) {
+            tank.removeClass('my_tank');
+        }
+        else {
+            tank.removeClass('tank');
+        }
         tank.addClass('box');
         draw_tank(tank_json)
     }
@@ -109,9 +123,11 @@ $(document).ready(function() {
             socket.emit('setDirection', 'down', false);
         }
         if (event.keyCode == 81) {
+            console.log('Ура нажали го');
             socket.emit('setDirection', 'up', true);
         }
         if (event.keyCode == 87) {
+            console.log('Ура нажали stop');
             socket.emit('setDirection', 'up', false);
         }
 

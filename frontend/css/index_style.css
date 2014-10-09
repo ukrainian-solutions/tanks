@@ -1,7 +1,7 @@
 .box {
     float: left;
-    width: 23px;
-    height: 23px;
+    width: 30px;
+    height: 30px;
     margin: 2px;
     border: 1px solid gray;
     padding: 10px;
@@ -9,8 +9,8 @@
 }
 .water {
     float: left;
-    width: 23px;
-    height: 23px;
+    width: 30px;
+    height: 30px;
     margin: 2px;
     border: 1px solid gray;
     padding: 10px;
@@ -18,8 +18,8 @@
 }
 .wall {
     float: left;
-    width: 23px;
-    height: 23px;
+    width: 30px;
+    height: 30px;
     margin: 2px;
     border: 1px solid gray;
     padding: 10px;
@@ -28,8 +28,8 @@
 
 .grass {
     float: left;
-    width: 23px;
-    height: 23px;
+    width: 30px;
+    height: 30px;
     margin: 2px;
     border: 1px solid gray;
     padding: 10px;
@@ -38,10 +38,29 @@
 
 .tank {
     float: left;
-    background: url('/images/tank.png');
-    width: 23px;
-    height: 23px;
+    background: url('/images/tank2.png');
+    width: 30px;
+    height: 30px;
     margin: 2px;
     border: 1px solid gray;
     padding: 10px;
+    color: black;
+    font-size: 40px;
+    font-weight: bold;
+    line-height: 30px;
+    text-align: center;
+}
+.my_tank {
+    float: left;
+    background: url('/images/my_tank.png');
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+    border: 1px solid gray;
+    padding: 10px;
+    color: black;
+    font-size: 40px;
+    font-weight: bold;
+    line-height: 30px;
+    text-align: center;
 }
