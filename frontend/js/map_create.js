@@ -80,6 +80,7 @@ $(document).ready(function() {
     start_game();
 
     function draw_tank(tank_json) {
+        console.log(tank_json);
         var y = tank_json['place_on_map'][0];
         var x = tank_json['place_on_map'][1];
         var div = $('*[data-x='+x.toString()+'][data-y='+ y.toString()+']');
@@ -91,6 +92,7 @@ $(document).ready(function() {
         else {
             div.addClass('tank');
         }
+        div.addClass(tank_json['direction'])
     }
 
     function move_tank(tank_json) {
@@ -102,6 +104,10 @@ $(document).ready(function() {
         else {
             tank.removeClass('tank');
         }
+        tank.removeClass('left');
+        tank.removeClass('right');
+        tank.removeClass('down');
+        tank.removeClass('up');
         tank.addClass('box');
         draw_tank(tank_json)
     }
