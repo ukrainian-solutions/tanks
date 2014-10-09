@@ -108,9 +108,13 @@ $(document).ready(function() {
             console.log("Ура нажали down");
             socket.emit('setDirection', 'down', false);
         }
-        if (event.keyCode == 32) {
+        if (event.keyCode == 81) {
             socket.emit('setDirection', 'up', true);
         }
+        if (event.keyCode == 87) {
+            socket.emit('setDirection', 'up', false);
+        }
+
 
     });
 
