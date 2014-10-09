@@ -48,7 +48,8 @@ class Tank
         @is_hold = yes
         console.log @id, 'stopped by wall'
       else if tile is 3
-        @wait = 1
+        @wait = @wait + 2
+        @place_on_map = [x, y]
         console.log @id, 'in dirty'
       else if tile is 4
         @is_hold = yes
