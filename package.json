@@ -12,7 +12,8 @@
     "node": ">=0.10"
   },
   "dependencies": {
-    "express": "^4.9.6"
+    "express": "^4.9.6",
+    "socket.io": "^1.1.0"
   },
   "devDependencies": {}
 }
