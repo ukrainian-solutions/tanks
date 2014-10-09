@@ -43,4 +43,15 @@ class Tank
 
   demage: ->
 
+  toJson: ->
+    id: @id
+    direction: @direction
+    is_hold: @is_hold
+    wait: @wait
+    bullets: @bullets
+    bullets_max: @bullets_max
+    health: @health
+    place_on_map: @place_on_map
+
+
 module.exports = Tank

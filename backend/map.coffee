@@ -25,8 +25,8 @@ class Map
 
   getTile: (x,y)-> return @map[y][x]
 
-  maxX: -> map[0].length
-  maxY: -> map.length
+  maxX: -> @map[0].length
+  maxY: -> @map.length
 
 map = new Map
 
