@@ -79,14 +79,14 @@ $(document).ready(function() {
         var y = tank_json['place_on_map'][0];
         var x = tank_json['place_on_map'][1];
         var div = $('*[data-x='+x.toString()+'][data-y='+ y.toString()+']');
-        div.removeClass();
+//        div.removeClass();
         div.attr('data-id_tank', tank_json['id']);
         div.addClass('tank');
     }
 
     function move_tank(tank_json) {
         var tank = $('[data-id_tank='+tank_json['id']+']');
-        tank.removeClass();
+        tank.removeClass('tank');
         tank.addClass('box');
         draw_tank(tank_json)
     }
