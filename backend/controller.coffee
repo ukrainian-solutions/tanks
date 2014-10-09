@@ -8,6 +8,11 @@ class Controller
 
   tanksCount: => @tanks.length
   appendTank: (tank)-> @tanks.push tank
+  removeTank: (tank_to_delete)->
+    new_tanks = []
+    for tank in @tanks
+      if tank.id != tank_to_delete.id then new_tanks.push tank
+    @tanks = new_tanks
 
   whatOnTile: (x,y)->
     console.log 'tanks', @tanks
@@ -19,6 +24,7 @@ class Controller
     @tanks_interval = setInterval =>
       tanks = []
       for tank in @tanks
+        if tank == undefined then continue
         tank.move()
         tanks.push tank.toJson()
       @io.sockets.emit 'tanks', tanks
@@ -27,5 +33,6 @@ class Controller
   stop: ->
     clearInterval @tanks_interval
     @tanks_interval = no
+
 
 module.exports = new Controller

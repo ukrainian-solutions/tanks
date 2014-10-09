@@ -39,6 +39,9 @@ io.on 'connection', (socket)=>
         controller.appendTank socket.tank
     fn socket.tank.toJson()
 
+  socket.on 'disconnect', ->
+    if socket.tank != undefined then controller.removeTank socket.tank
+
   socket.on 'map', (fn)->
     console.log 'map'
     fn map.getMap()
