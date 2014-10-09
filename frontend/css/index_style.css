@@ -7,14 +7,14 @@
     padding: 10px;
     background: greenyellow;
 }
-.wall {
+.water {
     float: left;
     width: 23px;
     height: 23px;
     margin: 2px;
     border: 1px solid gray;
     padding: 10px;
-    background: #4b1a7d;
+    background: blue;
 }
 
 .grass {
