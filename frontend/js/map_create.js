@@ -70,18 +70,18 @@ $(document).ready(function() {
 
     function start_game() {
         socket.emit('addTank', function(tank_json) {
-        console.log('this is tank', tank_json);
-        draw_tank(tank_json)
+            console.log('this is tank', tank_json);
+            draw_tank(tank_json)
         });
     }
 
     function draw_tank(tank_json) {
         var y = tank_json['place_on_map'][0];
         var x = tank_json['place_on_map'][1];
-        div = $('*[data-x='+x.toString()+'][data-y='+ y.toString()+']');
+        var div = $('*[data-x='+x.toString()+'][data-y='+ y.toString()+']');
         div.removeClass();
+        div.data('id_tank', tank_json['id']);
         div.addClass('tank');
-        div.data('id_tank', tank_json['id'])
     }
 
     function move_tank(tank_json) {
@@ -90,7 +90,6 @@ $(document).ready(function() {
         tank.addClass('box');
         draw_tank(tank_json)
     }
-
 
     socket.on('tanks', function(tanks) {
        console.log(tanks);
@@ -103,10 +102,10 @@ $(document).ready(function() {
     socket.emit('tanks', function(tanks_json) {
        for (var _i = 0, _len = tanks_json.length; _i < _len; _i++) {
             var tank = tanks_json[_i];
-            draw_tank(tank)
+            draw_tank(tank);
        }
     });
-    $('#start_game').on('click', start_game())
+    $('#start_game').on('click', start_game());
 
 
 
