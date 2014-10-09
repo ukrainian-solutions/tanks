@@ -55,5 +55,5 @@ io.on 'connection', (socket)=>
   socket.on 'start', ->
     controller.start()
 
-  socket.on 'pause', ->
+  socket.on 'stop', ->
     controller.stop()

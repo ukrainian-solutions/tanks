@@ -20,6 +20,9 @@ class Tank
   move: ->
     if @health < 0 then return no
     if @is_hold then return no
+    if @wait > 0
+      @wait = @wait - 1
+      return yes
 
     x = @place_on_map[0]
     y = @place_on_map[1]
@@ -31,14 +34,25 @@ class Tank
       when "down" then y++
       else return no
 
-    if x <= 0 or y <= 0 or x > map.maxX() or y > map.maxY()
+    if x < 0 or y < 0 or x > map.maxX() or y > map.maxY()
       @is_hold = yes
       return yes
 
     on_map = controller.whatOnTile x, y
 
     if not on_map
-      @place_on_map = [x, y]
+      tile = map.getTile x, y
+      if tile is 0
+        @place_on_map = [x, y]
+      else if tile is 1
+        @is_hold = yes
+        console.log @id, 'stopped by wall'
+      else if tile is 3
+        @wait = 1
+        console.log @id, 'in dirty'
+      else if tile is 4
+        @is_hold = yes
+        console.log @id, 'stopped by water'
       return yes
     else
       if on_map[0] == 'tank'
