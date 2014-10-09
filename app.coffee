@@ -15,11 +15,7 @@ app.get '/', (req, res, next) -> res.sendFile __dirname + '/frontend/index.html'
 app.use '/bower', express.static(__dirname + '/bower_components')
 app.use '/', express.static(__dirname + '/frontend')
 
-
-first_tank = new Tank controller.tanksCount()
-second_tank = new Tank controller.tanksCount()
-
-second_tank.place_on_map = [10,10]
+controller.appendTank new Tank 0
 
 io.on 'connection', (socket)=>
 
@@ -33,9 +29,15 @@ io.on 'connection', (socket)=>
       if map.getTile(x, y) is 0 and controller.whatOnTile(x, y) is no
         not_placed = no
         socket.tank.place_on_map = [x,y]
+        controller.appendTank socket.tank
     fn socket.tank.toJson()
 
   socket.on 'map', (fn)->
     console.log 'map'
     fn map.getMap()
 
+  socket.on 'tanks', (fn)->
+    tanks = []
+    for tank in controller.tanks
+      tanks.push tank.toJson()
+    fn(tanks)

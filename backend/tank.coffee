@@ -12,7 +12,7 @@ class Tank
   bullets_max: 3  # how many bullets can be on map
   health: 3  # if tank was shuted healts - 1. If ==0 tank is dead
 
-  place_on_map: [1, 1]  # [x, y]
+  place_on_map: [3, 1]  # [x, y]
 
   constructor: (@id)->
 
@@ -29,7 +29,7 @@ class Tank
       when "down" then y++
       else return no
 
-    if x <= 0 or y <= 0 or x >= map.maxX() or y >= map.maxY()
+    if x <= 0 or y <= 0 or x > map.maxX() or y > map.maxY()
       @is_hold = yes
       return no
 
