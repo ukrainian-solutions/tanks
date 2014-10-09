@@ -81,7 +81,6 @@ $(document).ready(function() {
         var y = tank_json['place_on_map'][0];
         var x = tank_json['place_on_map'][1];
         var div = $('*[data-x='+x.toString()+'][data-y='+ y.toString()+']');
-//        div.removeClass();
         div.attr('data-id_tank', tank_json['id']);
         div.html(tank_json['health']);
         if(tank_json['id'] == my_tank) {
