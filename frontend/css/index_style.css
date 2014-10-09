@@ -16,8 +16,27 @@
     padding: 10px;
     background: blue;
 }
+.wall {
+    float: left;
+    width: 23px;
+    height: 23px;
+    margin: 2px;
+    border: 1px solid gray;
+    padding: 10px;
+    background: #151612;
+}
 
 .grass {
+    float: left;
+    width: 23px;
+    height: 23px;
+    margin: 2px;
+    border: 1px solid gray;
+    padding: 10px;
+    background: green;
+}
+
+.tank {
     float: left;
     width: 23px;
     height: 23px;

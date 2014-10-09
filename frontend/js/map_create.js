@@ -29,8 +29,16 @@ $(document).ready(function() {
                 if(map[x][y] == 0) {
                     $('<div/>', {
                         id: 'box',
-                        text: x.toString() +" ,"+ y.toString(),
                         'class': 'box',
+                        'data-x': x,
+                        'data-y': y
+                    }).appendTo('body');
+                    continue;
+                }
+                if(map[x][y] == 1) {
+                    $('<div/>', {
+                        id: 'box',
+                        'class': 'wall',
                         'data-x': x,
                         'data-y': y
                     }).appendTo('body');
@@ -39,7 +47,6 @@ $(document).ready(function() {
                 if(map[x][y] == 3){
                     $('<div/>', {
                         id: 'box',
-                        text: x.toString() +" ,"+ y.toString(),
                         'class': 'grass',
                         'data-x': x,
                         'data-y': y
@@ -48,7 +55,6 @@ $(document).ready(function() {
                 if(map[x][y] == 4){
                     $('<div/>', {
                         id: 'box',
-                        text: x.toString() +" ,"+ y.toString(),
                         'class': 'water',
                         'data-x': x,
                         'data-y': y
@@ -62,12 +68,14 @@ $(document).ready(function() {
         }
     }
     socket.emit('map', function(map) {
-        console.log(map)
         create_map(map);
     });
 
     function draw_tank(tank_json) {
         var x = tank_json['x'];
         var y = tank_json['y'];
+        div = $('*[data-x='+x.toString()+'][data-y='+ y.toString()+']');
+        div.removeClass();
+        div.addClass('tank')
     }
 });
