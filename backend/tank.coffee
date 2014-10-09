@@ -10,7 +10,7 @@ class Tank
 
   bullets: 0  # how many bullets in map now
   bullets_max: 3  # how many bullets can be on map
-  health: 3  # if tank was shuted healts - 1. If ==0 tank is dead
+  health: 9  # if tank was shuted healts - 1. If ==0 tank is dead
 
   place_on_map: [3, 1]  # [x, y]
 
