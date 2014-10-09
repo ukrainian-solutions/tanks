@@ -91,6 +91,29 @@ $(document).ready(function() {
         draw_tank(tank_json)
     }
 
+    $('html').keydown(function(eventObject){
+        if (event.keyCode == 37) {
+            console.log("Ура нажали left");
+            socket.emit('setDirection', 'left', false);
+        }
+        if (event.keyCode == 38) {
+            console.log("Ура нажали up");
+            socket.emit('setDirection', 'up', false);
+        }
+        if (event.keyCode == 39) {
+            console.log("Ура нажали right");
+            socket.emit('setDirection', 'right', false);
+        }
+        if (event.keyCode == 40) {
+            console.log("Ура нажали down");
+            socket.emit('setDirection', 'down', false);
+        }
+        if (event.keyCode == 32) {
+            socket.emit('setDirection', 'up', true);
+        }
+
+    });
+
     socket.on('tanks', function(tanks) {
        console.log(tanks[1].place_on_map);
        for (var _i = 0, _len = tanks.length; _i < _len; _i++) {
