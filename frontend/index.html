@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+  <title>World of Tanks</title>
+  <link rel="stylesheet" type="text/css" href="css/index_style.css">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src='/bower/jquery/dist/jquery.min.js'></script>
+  <script src='/js/map_create.js'></script>
+  <script>
+    var socket = io.connect('/');
+      socket.on('news', function (data) {
+      console.log(data);
+      socket.emit('my other event', { my: 'data' });
+  });
+</script>
 </head>
 <body>
 
