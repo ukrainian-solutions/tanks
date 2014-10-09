@@ -17,8 +17,11 @@ class Controller
 
   start: -> if @tanks_interval is no
     @tanks_interval = setInterval =>
+      tanks = []
       for tank in @tanks
         tank.move()
+        tanks.push tank.toJson()
+      @io.sockets.emit 'tanks', tanks
     , 1000
 
   stop: ->
