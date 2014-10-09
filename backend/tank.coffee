@@ -18,7 +18,7 @@ class Tank
 
   ## return yes is tank was moved or one of property changed
   move: ->
-    if @health < 0 then return no
+    if @health <= 0 then return no
     if @is_hold then return no
     if @wait > 0
       @wait = @wait - 1
@@ -57,11 +57,13 @@ class Tank
       return yes
     else
       if on_map[0] == 'tank'
-        on_map[1].demage()
+        console.log 'founded tank! DO DEMAGE!'
+        on_map[1].demage(@)
         @is_hold = yes
         return yes
 
-  demage: ->
+  demage: (tank)->
+    console.log @id, 'was demaged by ', tank.id
     if @health > 0
       @health = @health - 1
 
