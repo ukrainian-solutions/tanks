@@ -16,8 +16,10 @@ class Controller
 
   whatOnTile: (x,y)->
     console.log 'tanks', @tanks
-    for tank in @tanks then if tank.place_on_map == [x,y] then return ['tank', tank]
-    for bullet in @bullets then if bullet.place_on_map == [x,y] then return ['bullet', bullet]
+    for tank in @tanks
+      if tank.place_on_map[0] is x and tank.place_on_map[1] == y
+        return ['tank', tank]
+    # for bullet in @bullets then if bullet.place_on_map == [x,y] then return ['bullet', bullet]
     return no
 
   start: -> if @tanks_interval is no

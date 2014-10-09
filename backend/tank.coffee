@@ -62,7 +62,8 @@ class Tank
         return yes
 
   demage: ->
-    @health = @health - 1
+    if @health > 0
+      @health = @health - 1
 
 
   toJson: ->
