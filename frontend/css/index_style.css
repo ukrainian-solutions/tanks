@@ -38,10 +38,10 @@
 
 .tank {
     float: left;
+    background: url('/images/tank.png');
     width: 23px;
     height: 23px;
     margin: 2px;
     border: 1px solid gray;
     padding: 10px;
-    background: green;
 }

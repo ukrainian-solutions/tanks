@@ -67,15 +67,40 @@ $(document).ready(function() {
             }).appendTo('body');
         }
     }
+
+    function start_game() {
+        return confirm("Начать игру?!")
+    }
+
+    function draw_tank(tank_json) {
+        var x = tank_json['place_on_map'][0];
+        var y = tank_json['place_on_map'][1];
+        div = $('*[data-x='+y.toString()+'][data-y='+ x.toString()+']');
+        div.removeClass();
+        div.addClass('tank')
+    }
+
+
+
     socket.emit('map', function(map) {
         create_map(map);
     });
 
-    function draw_tank(tank_json) {
-        var x = tank_json['x'];
-        var y = tank_json['y'];
-        div = $('*[data-x='+x.toString()+'][data-y='+ y.toString()+']');
-        div.removeClass();
-        div.addClass('tank')
+    socket.emit('tanks', function(tanks_json) {
+       for (var _i = 0, _len = tanks_json.length; _i < _len; _i++) {
+            var tank = tanks_json[_i];
+            draw_tank(tank)
+       }
+    });
+
+    if(start_game()) {
+        socket.emit('addTank', function(tank_json) {
+        console.log('this is tank', tank_json);
+        draw_tank(tank_json)
+        });
     }
+
+
+
+
 });
