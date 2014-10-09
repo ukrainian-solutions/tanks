@@ -1,0 +1,18 @@
+{
+  "author": "Ukrainian.Solutions",
+  "name": "taks",
+  "description": "",
+  "version": "0.0.1",
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ukrainian-solutions/tanks"
+  },
+  "engines": {
+    "node": ">=0.10"
+  },
+  "dependencies": {
+    "express": "^4.9.6"
+  },
+  "devDependencies": {}
+}
