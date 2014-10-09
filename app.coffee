@@ -4,7 +4,7 @@ server = require('http').Server app
 io = require('socket.io') server
 map = require './backend/map'
 controller = require './backend/controller'
-
+controller.io = io
 Tank = require './backend/tank'
 
 
@@ -20,6 +20,7 @@ controller.appendTank new Tank 0
 io.on 'connection', (socket)=>
 
   socket.on 'addTank', (fn)->
+    if socket.tank then return fn no
     socket.tank = new Tank controller.tanksCount()
 
     not_placed = yes
@@ -41,3 +42,18 @@ io.on 'connection', (socket)=>
     for tank in controller.tanks
       tanks.push tank.toJson()
     fn(tanks)
+
+  socket.on 'setDirection', (direction, is_hold)->
+    console.log 'setDirection', direction, is_hold
+    if direction in ['left', 'right', 'up', 'down'] and is_hold in [yes, no]
+      console.log 'yes'
+      socket.tank.direction = direction
+      socket.tank.is_hold = is_hold
+    else console.log 'no'
+
+
+  socket.on 'start', ->
+    controller.start()
+
+  socket.on 'pause', ->
+    controller.stop()

@@ -16,8 +16,10 @@ class Tank
 
   constructor: (@id)->
 
+  ## return yes is tank was moved or one of property changed
   move: ->
-    if @is_hold then return yes
+    if @health < 0 then return no
+    if @is_hold then return no
 
     x = @place_on_map[0]
     y = @place_on_map[1]
@@ -31,17 +33,22 @@ class Tank
 
     if x <= 0 or y <= 0 or x > map.maxX() or y > map.maxY()
       @is_hold = yes
-      return no
+      return yes
 
-    on_map = controller.whatOnMap x, y
+    on_map = controller.whatOnTile x, y
 
-    if not on_map then @place_on_map = [x, y]
+    if not on_map
+      @place_on_map = [x, y]
+      return yes
     else
       if on_map[0] == 'tank'
         on_map[1].demage()
         @is_hold = yes
+        return yes
 
   demage: ->
+    @health = @health - 1
+
 
   toJson: ->
     id: @id
