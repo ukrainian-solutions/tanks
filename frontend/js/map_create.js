@@ -80,7 +80,7 @@ $(document).ready(function() {
         var x = tank_json['place_on_map'][1];
         var div = $('*[data-x='+x.toString()+'][data-y='+ y.toString()+']');
         div.removeClass();
-        div.data('id_tank', tank_json['id']);
+        div.attr('data-id_tank', tank_json['id']);
         div.addClass('tank');
     }
 
@@ -92,7 +92,11 @@ $(document).ready(function() {
     }
 
     socket.on('tanks', function(tanks) {
-       console.log(tanks);
+       console.log(tanks[1].place_on_map);
+       for (var _i = 0, _len = tanks.length; _i < _len; _i++) {
+            var tank = tanks[_i];
+            move_tank(tank);
+       }
     });
 
     socket.emit('map', function(map) {
