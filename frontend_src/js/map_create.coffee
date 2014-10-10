@@ -191,8 +191,8 @@ $ ->
     div.addClass(boost[1])
 
   remove_boost = (boost) ->
-    x = boost[0][0]
-    y = boost[0][1]
+    y = boost[0][0]
+    x = boost[0][1]
 
     div = $('*[data-x='+x.toString()+'][data-y='+ y.toString()+']')
     div.removeClass(boost[1])
