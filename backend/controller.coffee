@@ -3,7 +3,10 @@ class Controller
   tanks: []
   bullets: []
 
-  tanks_interval: no
+  tanks_timeout: no
+  is_started: no
+  mainLoop_timeout: 150
+
 
 
   tanksCount: => @tanks.length
@@ -22,19 +25,22 @@ class Controller
     # for bullet in @bullets then if bullet.place_on_map == [x,y] then return ['bullet', bullet]
     return no
 
-  start: -> if @tanks_interval is no
-    @tanks_interval = setInterval =>
-      tanks = []
-      for tank in @tanks
-        if tank == undefined then continue
-        tank.move()
-        tanks.push tank.toJson()
-      @io.sockets.emit 'tanks', tanks
-    , 500
+  tankMaxSpeed: -> Math.round 1000/@mainLoop_timeout
 
-  stop: ->
-    clearInterval @tanks_interval
-    @tanks_interval = no
+  mainLoop: =>
+    tanks = []
+    for tank in @tanks
+      if tank == undefined then continue
+      tank.move()
+      tanks.push tank.toJson()
+    @io.sockets.emit 'tanks', tanks
+    if @is_started then setTimeout @mainLoop, @mainLoop_timeout
+
+  start: ->
+    @is_started = yes
+    @mainLoop()
+
+  stop: -> @is_started = no
 
 
 module.exports = new Controller

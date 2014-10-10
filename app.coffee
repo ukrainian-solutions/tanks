@@ -17,25 +17,13 @@ app.use '/', express.static(__dirname + '/frontend')
 
 
 directions = ['left', 'right', 'up', 'down']
+
+
 bot1 = new Tank 0
 controller.appendTank bot1
 setInterval ->
   bot1.direction = directions[Math.floor (Math.random() * 5)]
   bot1.is_hold = no
-, 2000
-
-bot2 = new Tank 1
-controller.appendTank bot2
-setInterval ->
-  bot2.direction = directions[Math.floor (Math.random() * 4)]
-  bot2.is_hold = no
-, 2000
-
-bot3 = new Tank 2
-controller.appendTank bot3
-setInterval ->
-  bot3.direction = directions[Math.floor (Math.random() * 4)]
-  bot3.is_hold = no
 , 2000
 
 io.on 'connection', (socket)=>
@@ -76,6 +64,9 @@ io.on 'connection', (socket)=>
       socket.tank.direction = direction
       socket.tank.is_hold = is_hold
     else console.log 'no'
+
+  socket.on 'setSpeed', (speed)->
+    socket.tank.speed = speed
 
   socket.on 'start', ->
     controller.start()

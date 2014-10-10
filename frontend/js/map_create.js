@@ -72,6 +72,18 @@ $(document).ready(function() {
 
     function start_game() {
         socket.emit('addTank', function(tank_json) {
+            if(tank_json["id"] === undefined) {
+              tank_json = {
+                "id": tank_json[0],
+                "direction": tank_json[1],
+                "is_hold": tank_json[2],
+                "wait": tank_json[3],
+                "bullets": tank_json[4],
+                "bullets_max": tank_json[5],
+                "health": tank_json[6],
+                "place_on_map": tank_json[7]
+              };
+            };
             console.log('this is tank', tank_json);
             my_tank = tank_json['id'];
             draw_tank(tank_json)
@@ -80,6 +92,19 @@ $(document).ready(function() {
     start_game();
 
     function draw_tank(tank_json) {
+        // return [@id, @direction, @is_hold, @wait, @bullets, @bullets_max, @health, @place_on_map]
+        if(tank_json["id"] === undefined) {
+          tank_json = {
+            "id": tank_json[0],
+            "direction": tank_json[1],
+            "is_hold": tank_json[2],
+            "wait": tank_json[3],
+            "bullets": tank_json[4],
+            "bullets_max": tank_json[5],
+            "health": tank_json[6],
+            "place_on_map": tank_json[7]
+          };
+        };
         var y = tank_json['place_on_map'][0];
         var x = tank_json['place_on_map'][1];
         var div = $('*[data-x='+x.toString()+'][data-y='+ y.toString()+']');
@@ -95,6 +120,29 @@ $(document).ready(function() {
     }
 
     function move_tank(tank_json) {
+        // toJson: -> [@id
+                    // @direction
+                    // @is_hold
+                    // @wait
+                    // @bullets
+                    // @bullets_max
+                    // @health
+                    // @place_on_map
+                    // @damage_inflicted
+                    // @demage_obtained
+                    // @destroyed]
+        if(tank_json["id"] === undefined) {
+          tank_json = {
+            "id": tank_json[0],
+            "direction": tank_json[1],
+            "is_hold": tank_json[2],
+            "wait": tank_json[3],
+            "bullets": tank_json[4],
+            "bullets_max": tank_json[5],
+            "health": tank_json[6],
+            "place_on_map": tank_json[7]
+          };
+        };
         var tank = $('[data-id_tank='+tank_json['id']+']');
         tank.html('');
         if(tank_json['id'] == my_tank) {

@@ -14,20 +14,33 @@ class Tank
   respawn_after: 10
   respawn_i: -1
 
+  speed: controller.tankMaxSpeed()
+  speed_i: 0
+
+  damage_inflicted: 0
+  demage_obtained: 0
+  destroyed: 0
+
   place_on_map: [3, 1]  # [x, y]
 
   constructor: (@id)->
 
   ## return yes is tank was moved or one of property changed
   move: ->
+    if @speed_i > 0
+      @speed_i--
+      return no
+
     if @health <= 0
       if @respawn_i == 0 then @health = 9
       @respawn_i = @respawn_i - 1
       return no
-    if @is_hold then return no
     if @wait > 0
       @wait = @wait - 1
       return yes
+    @speed_i = @speed
+
+    if @is_hold then return no
 
     x = @place_on_map[0]
     y = @place_on_map[1]
@@ -63,26 +76,37 @@ class Tank
     else
       if on_map[0] == 'tank'
         console.log 'founded tank! DO DEMAGE!'
-        on_map[1].demage(@)
+        demage = on_map[1].demage(@)
+        if demage is "destroy"
+          @destroyed += 1
+          @health += 2
+        else @damage_inflicted = demage
         @is_hold = yes
         return yes
 
   demage: (tank)->
     console.log @id, 'was demaged by ', tank.id
     if @health > 0
-      @health = @health - 1
-      if @health == 0 then @respawn_i = @respawn_after
+      demage = 1
+      @health = @health - demage
+      @demage_obtained += demage
+      if @health == 0
+        @respawn_i = @respawn_after
+        return "destroy"
+      return demage
+    return 0
 
 
-  toJson: ->
-    id: @id
-    direction: @direction
-    is_hold: @is_hold
-    wait: @wait
-    bullets: @bullets
-    bullets_max: @bullets_max
-    health: @health
-    place_on_map: @place_on_map
-
+  toJson: -> [@id
+              @direction
+              @is_hold
+              @wait
+              @bullets
+              @bullets_max
+              @health
+              @place_on_map
+              @damage_inflicted
+              @demage_obtained
+              @destroyed]
 
 module.exports = Tank
