@@ -1,12 +1,13 @@
 class Tank
-  id= false
-  direction = false
-  is_hold = false
-  wait = false
-  bullets = false
-  bullets_max = false
-  health = false
-  place_on_map = false
+
+  id: false
+  direction: false
+  is_hold: false
+  wait: false
+  bullets: false
+  bullets_max: false
+  health: false
+  place_on_map: false
 
   constructor: (tank_json)->
     @fill(tank_json)

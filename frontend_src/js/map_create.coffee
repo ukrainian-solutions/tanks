@@ -1,5 +1,4 @@
 $ ->
-  my_tank = 0
   start = false
   stop = true
   my_direction = 'up'
@@ -11,7 +10,7 @@ $ ->
     text: 'I am box'
     })
     for x in [0..map.length-1]
-      for y in [0..map.length-1]
+      for y in [0..map[x].length]
         if map[x][y] == 0
           $('<div/>', {
             id: 'box',
@@ -46,11 +45,12 @@ $ ->
       $('<div/>', {
         id: 'nbox',
         'style': 'clear: both;'
-        }).appendTo 'body'
+      }).appendTo 'body'
 
   start_game =  ()->
     socket.emit('addTank', (tank_json) ->
       if tank_json["id"] == undefined
+        my_tank = new Tank(tank_json)
         tank_json =
           "id": tank_json[0],
           "direction": tank_json[1],
@@ -62,7 +62,6 @@ $ ->
           "place_on_map": tank_json[7]
 
       console.log('this is tank', tank_json);
-      my_tank = tank_json['id']
       draw_tank(tank_json)
       )
 
@@ -86,7 +85,7 @@ $ ->
     div = $('*[data-x='+x.toString()+'][data-y='+ y.toString()+']')
     div.attr('data-id_tank', tank_json['id'])
     div.html(tank_json['health'])
-    if(tank_json['id'] == my_tank)
+    if(tank_json['id'] == my_tank.id)
         div.addClass('my_tank')
     else
         div.addClass('tank')
@@ -117,7 +116,7 @@ $ ->
 
     tank = $('[data-id_tank='+tank_json['id']+']')
     tank.html('')
-    if tank_json['id'] == my_tank
+    if tank_json['id'] == my_tank.id
         tank.removeClass('my_tank')
     else
         tank.removeClass('tank')
