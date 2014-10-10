@@ -104,9 +104,9 @@ $ ->
     #            // @bullets_max
     #            // @health
     #            // @place_on_map
-    #           // @damage_inflicted
-    #             // @demage_obtained
-    #             // @destroyed]
+    #            // @damage_inflicted
+    #            // @demage_obtained
+    #            // @destroyed]
     if(tank_json["id"] == undefined)
       tank_json =
         "id": tank_json[0],
@@ -117,7 +117,6 @@ $ ->
         "bullets_max": tank_json[5],
         "health": tank_json[6],
         "place_on_map": tank_json[7]
-
     tank = $('[data-id_tank='+tank_json['id']+']')
     tank.html('')
     if tank_json['id'] == my_tank.id
@@ -130,6 +129,82 @@ $ ->
     tank.removeClass('up')
     tank.addClass('box')
     draw_tank(tank_json)
+
+  show_tabl_tank = (tank_json) ->
+    tank = '#t_'+tank_json['id']
+    console.log('call show tabl_tank', tank, $(tank))
+    if $(tank).length > 0
+      console.log('not tank tr')
+      div = $('<tr/>', {
+        id: tank,
+        'class': 'tr_tank',
+      }).appendTo '.stats'
+      td_id = $('<td/>', {
+        id: '_id',
+        'class': 'td_tank',
+      }).appendTo div
+      td_health = $('<td/>', {
+        id: 'health',
+        'class': 'td_tank',
+      }).appendTo div
+      td_damage_inflicted = $('<td/>', {
+        id: 'damage_inflicted',
+        'class': 'td_tank',
+      }).appendTo div
+      td_demage_obtained = $('<td/>', {
+        id: 'demage_obtained',
+        'class': 'td_tank',
+      }).appendTo div
+
+    else
+      console.log 'yes tank tr'
+      td_id = $(tank+' #_id')
+      td_health = $(tank+' #health')
+      td_damage_inflicted = $(tank +' #damage_inflicted')
+      td_demage_obtained = $(tank ' #demage_obtained')
+
+    td_id.html(tank_json['id'])
+    td_health.html(if tank_json['health'] > 0 then tank_json['health'] else 0)
+    td_damage_inflicted.html(if tank_json['damage_inflicted'] > 0 then tank_json['damage_inflicted'] else 0)
+    td_demage_obtained.html(if tank_json['demage_obtained'] > 0 then tank_json['demage_obtained']  else 0)
+
+
+  socket.on('tankDestroy', (tank_id) ->
+    tank = $('[data-id_tank='+tank_id+']')
+    tank.html('')
+    if tank_id == my_tank.id
+        tank.removeClass('my_tank')
+    else
+        tank.removeClass('tank')
+    tank.removeClass('left')
+    tank.removeClass('right')
+    tank.removeClass('down')
+    tank.removeClass('up')
+    tank.addClass('box')
+  )
+
+  add_boost = (boost) ->
+    x = boost[0][0]
+    y = boost[0][1]
+
+    div = $('*[data-x='+x.toString()+'][data-y='+ y.toString()+']')
+    div.addClass(boost[1])
+
+  remove_boost = (boost) ->
+    x = boost[0][0]
+    y = boost[0][1]
+
+    div = $('*[data-x='+x.toString()+'][data-y='+ y.toString()+']')
+    div.removeClass(boost[1])
+
+  socket.on('newBoost', (boost) ->
+    console.log('boost',boost)
+    add_boost(boost)
+  )
+  socket.on('removeBoost', (boost) ->
+    console.log('boost',boost)
+    remove_boost(boost)
+  )
 
   $('html').keydown( (eventObject) ->
     now_direct = my_direction
@@ -177,7 +252,7 @@ $ ->
 
   socket.emit('tanks', (tanks_json) ->
     for tank in tanks_json
-          draw_tank(tank)
+      draw_tank(tank)
   )
 
 
@@ -194,3 +269,4 @@ $ ->
       socket.emit('stop')
       start = false
   )
+

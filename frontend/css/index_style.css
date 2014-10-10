@@ -16,6 +16,10 @@
     background: green;
 }
 
+.healthUP {
+    background: url('/images/healthUP.png');
+}
+
 .tank {
     float: left;
     background: url('/images/tank2.png');
