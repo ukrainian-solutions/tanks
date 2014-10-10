@@ -49,7 +49,7 @@ exports.mystery =  class BoostMystery extends Boost
   type: "mystery"
 
   use: (tank)->
-    switch Match.floor(Match.random()*4)
+    switch Math.floor(Math.random()*4)
       when 0 then @healthUP = Math.floor(Math.random()*10)
       when 1 then @healthDOWN = Math.floor(Math.random()*5)
       when 2 then @speedUP = 1
