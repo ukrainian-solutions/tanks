@@ -8,12 +8,17 @@ class Controller
   is_started: no
   mainLoop_timeout: 150
 
-
+  tank_last_id: 0
+  tank_id_prefixes: ["a", "A", "b", "B", "c", "C", "x", "X"]
 
   tanksCount: => @tanks.length
+
+  getNewTankId: ->
+    @tank_last_id = @tank_last_id + 1
+    return @tank_id_prefixes[Math.floor (Math.random() * @tank_id_prefixes.length)]+@tank_last_id
+
   appendTank: (tank)-> @tanks.push tank
-  removeTank: (tank_to_remove)->
-    @tanks_to_remove.push tank_to_remove.id
+  removeTank: (tank_to_remove)-> @tanks_to_remove.push tank_to_remove.id
 
   whatOnTile: (x,y)->
     console.log 'tanks', @tanks
