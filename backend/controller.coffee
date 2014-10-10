@@ -27,9 +27,11 @@ class Controller
 
   mainLoop: =>
     if @tanks_to_remove.length > 0
+      console.log 'tanks need remove:', @tanks_to_remove
       new_tanks = []
       for tank in @tanks
-        if not tank.id in @tanks_to_remove then new_tanks.push tank
+        if tank.id not in @tanks_to_remove then new_tanks.push tank
+        else console.log 'tank removed', tank.id
       @tanks = new_tanks
       @tanks_to_remove = []
 
