@@ -4,6 +4,11 @@ $ ->
   my_go = false
   my_tank = false
   lock = false
+  dict_map =
+    0: ''
+    1: 'wall'
+    3: 'grass'
+    4: 'water'
   callback = ->
     lock = false
   setTimeout callback, 3000
@@ -12,39 +17,15 @@ $ ->
       id: 'box',
       text: 'I am box'
     })
+    window.ttt = map
     for x in [0..map.length-1]
-      for y in [0..map[x].length]
-        if map[x][y] == 0
-          $('<div/>', {
-            id: 'box',
-            'class': 'box',
-            'data-x': x,
-            'data-y': y
-          }).appendTo 'body'
-          continue
-        if(map[x][y] == 1)
-          $('<div/>', {
-            id: 'box',
-            'class': 'box wall',
-            'data-x': x,
-            'data-y': y
-          }).appendTo('body')
-          continue
-        if(map[x][y] == 3)
-          $('<div/>', {
-            id: 'box',
-            'class': 'box grass',
-            'data-x': x,
-            'data-y': y
-          }).appendTo 'body'
-
-        if(map[x][y] == 4)
-          $('<div/>', {
-            id: 'box',
-            'class': 'box water',
-            'data-x': x,
-            'data-y': y
-          }).appendTo 'body'
+      for y in [0..map[x].length-1]
+        $('<div/>', {
+          id: 'box',
+          'class': "box #{dict_map[map[x][y]]}",
+          'data-x': x,
+          'data-y': y
+        }).appendTo 'body'
       $('<div/>', {
         id: 'nbox',
         'style': 'clear: both;'
