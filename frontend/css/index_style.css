@@ -4,6 +4,8 @@
     height: 20px;
     padding: 10px;
     background: greenyellow;
+    background-size:100% 100%;
+
 }
 .water {
     background: blue;
@@ -18,11 +20,13 @@
 
 .healthUP {
     background: url('/images/healthUP.png');
+    background-size:100% 100%;
 }
 
 .tank {
     float: left;
     background: url('/images/tank2.png');
+    background-size:100% 100%;
     width: 20px;
     height: 20px;
     padding: 10px;
@@ -35,6 +39,7 @@
 .my_tank {
     float: left;
     background: url('/images/my_tank.png');
+    background-size:100% 100%;
     width: 20px;
     height: 20px;
     padding: 10px;

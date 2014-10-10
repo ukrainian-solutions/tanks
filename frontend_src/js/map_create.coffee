@@ -254,19 +254,3 @@ $ ->
     for tank in tanks_json
       draw_tank(tank)
   )
-
-
-  $('#start').bind('click', () ->
-    if not start
-      console.log('start')
-      socket.emit('start')
-      stop = false
-  )
-
-  $('#stop').bind('click', () ->
-    if not stop
-      console.log('stop')
-      socket.emit('stop')
-      start = false
-  )
-
