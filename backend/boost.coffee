@@ -37,9 +37,22 @@ class Boost
 
 exports.speedUP = class BoostSpeedUP extends Boost
   type: "speedUP"
-  speedUP: 3
+  speedUP: 1
 
 
 exports.healthUP = class BoostHealthUP extends Boost
   type: "healthUP"
   healthUP: Math.floor(Math.random()*10)
+
+
+exports.mystery =  class BoostMystery extends Boost
+  type: "mystery"
+
+  use: (tank)->
+    switch Match.floor(Match.random()*4)
+      when 0 then @healthUP = Math.floor(Math.random()*10)
+      when 1 then @healthDOWN = Math.floor(Math.random()*5)
+      when 2 then @speedUP = 1
+      when 3 then @speedDOWN = 1
+      else @healthDOWN = 100
+    super
