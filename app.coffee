@@ -3,6 +3,7 @@ app = express()
 server = require('http').Server app
 io = require('socket.io') server
 map = require './backend/map'
+boost = require './backend/boost'
 controller = require './backend/controller'
 controller.io = io
 Tank = require './backend/tank'
@@ -67,3 +68,8 @@ io.on 'connection', (socket)=>
 
   socket.on 'stop', ->
     controller.stop()
+
+  socket.on 'addBoost', (type, place_on_map)->
+    if type == "health"
+      controller.appendBoost new boost.healthUP place_on_map
+    else controller.appendBoost new boost.speedUP place_on_map

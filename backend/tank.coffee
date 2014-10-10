@@ -85,6 +85,10 @@ class Tank
         else @damage_inflicted = demage
         @is_hold = yes
         return [yes, on_map[1]]
+      if on_map[0] == 'boost'
+        @place_on_map = [x, y]
+        on_map[1].use @
+        return yes
 
   demage: (tank)->
     console.log @id, 'was demaged by ', tank.id

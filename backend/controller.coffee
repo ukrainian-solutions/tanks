@@ -10,13 +10,14 @@ class Controller
   mainLoop_timeout: 150
 
   tank_last_id: 0
-  tank_id_prefixes: ["a", "A", "b", "B", "c", "C", "x", "X"]
+  boost_last_id: 0
+  id_prefixes: ["a", "A", "b", "B", "c", "C", "x", "X"]
 
   tanksCount: => @tanks.length
 
   getNewTankId: ->
     @tank_last_id = @tank_last_id + 1
-    return @tank_id_prefixes[Math.floor (Math.random() * @tank_id_prefixes.length)] + @tank_last_id
+    return @id_prefixes[Math.floor (Math.random() * @id_prefixes.length)] + @tank_last_id
 
   appendTank: (tank)->
     tank.speed = 3
@@ -25,12 +26,29 @@ class Controller
 
   removeTank: (tank_to_remove)-> @tanks_to_remove.push tank_to_remove.id
 
+  getNewBoostId: ->
+    @boost_last_id = @boost_last_id + 1
+    return @id_prefixes[Math.floor (Math.random() * @id_prefixes.length)] + @boost_last_id
+
   appendBoost: (boost)->
-    @boosts.appendBoost boost
-    @io.sockets.emit 'newBoost', @boost.toJson()
+    @boosts.push boost
+    @io.sockets.emit 'newBoost', boost.toJson()
+
+  removeBoost: (boost_to_remove)->
+    boosts = []
+    for boost in @boosts
+      if boost.id == boost_to_remove.id then continue
+      boosts.push boost
+    @boosts = boosts
+
 
   whatOnTile: (x,y)->
     console.log 'tanks count', @tanks.length
+
+    for boost in @boosts
+      if boost.place_on_map[0] is x and boost.place_on_map[1] == y
+        return ['boost', boost]
+
     for tank in @tanks
       if tank.place_on_map[0] is x and tank.place_on_map[1] == y
         return ['tank', tank]
