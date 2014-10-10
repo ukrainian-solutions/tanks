@@ -42,7 +42,7 @@ exports.speedUP = class BoostSpeedUP extends Boost
 
 exports.healthUP = class BoostHealthUP extends Boost
   type: "healthUP"
-  healthUP: Math.floor(Math.random()*10)
+  healthUP: Math.floor(Math.random()*10)+1
 
 
 exports.mystery =  class BoostMystery extends Boost
