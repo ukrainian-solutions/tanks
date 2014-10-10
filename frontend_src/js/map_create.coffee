@@ -4,6 +4,10 @@ $ ->
   my_direction = 'up'
   my_go = false
   my_tank = false
+  lock = false
+  callback = ->
+    lock = false
+  setTimeout callback, 3000
   create_map = (map) ->
     div = $('<div/>', {
     id: 'box',
@@ -21,10 +25,10 @@ $ ->
           continue
         if(map[x][y] == 1)
           $('<div/>', {
-          id: 'box',
-          'class': 'box wall',
-          'data-x': x,
-          'data-y': y
+            id: 'box',
+            'class': 'box wall',
+            'data-x': x,
+            'data-y': y
           }).appendTo('body')
           continue
         if(map[x][y] == 3)
@@ -154,13 +158,7 @@ $ ->
         console.log('Ура нажали stop')
         go = true
 
-    if my_direction != now_direct
-      socket.emit('setDirection', now_direct, my_go)
-      my_direction = now_direct
-      my_go = go
-    if my_go != go
-      my_go = go
-      socket.emit('setDirection', my_direction, my_go)
+    socket.emit('setDirection', now_direct, go)
     )
 
   socket.on('tanks', (tanks) ->
