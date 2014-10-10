@@ -35,7 +35,7 @@ class Boost
   toJson: -> [@place_on_map, @type]
 
 
-exports.sleedUP = class BoostSpeedUP extends Boost
+exports.speedUP = class BoostSpeedUP extends Boost
   type: "speedUP"
   speedUP: 3
 
