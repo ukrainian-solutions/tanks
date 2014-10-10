@@ -1,5 +1,4 @@
 $ ->
-  start = false
   stop = true
   my_direction = 'up'
   my_go = false
@@ -10,8 +9,8 @@ $ ->
   setTimeout callback, 3000
   create_map = (map) ->
     div = $('<div/>', {
-    id: 'box',
-    text: 'I am box'
+      id: 'box',
+      text: 'I am box'
     })
     for x in [0..map.length-1]
       for y in [0..map[x].length]

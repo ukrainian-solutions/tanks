@@ -22,6 +22,16 @@
     background: url('/images/healthUP.png');
     background-size:100% 100%;
 }
+.mystery {
+    background: url('/images/mystery.png');
+    background-size:100% 100%;
+}
+
+.speadUP {
+    background: url('/images/speadUP.png');
+    background-size:100% 100%;
+}
+
 
 .tank {
     float: left;
