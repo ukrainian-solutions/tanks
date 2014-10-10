@@ -12,7 +12,7 @@ class Tank
   bullets: 0  # how many bullets in map now
   bullets_max: 3  # how many bullets can be on map
   health: 9  # if tank was shuted healts - 1. If ==0 tank is dead
-  respawn_after: 10
+  respawn_after: 50
   respawn_i: -1
 
   speed: controller.tankMaxSpeed()
