@@ -75,8 +75,4 @@ io.on 'connection', (socket)=>
       socket.tank.is_hold = is_hold
     else console.log 'no'
 
-  socket.on 'start', ->
-    controller.start()
-
-  socket.on 'stop', ->
-    controller.stop()
+controller.start()
