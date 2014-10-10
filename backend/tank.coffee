@@ -4,6 +4,7 @@ controller = require './controller'
 class Tank
 
   id: no
+  socket: no  # link to owner socket or string 'bot'
   direction: 'right'  # up, right, down, left
   is_hold: yes  # yes if tank is not move
   wait: 0  # count turn no move
@@ -23,7 +24,7 @@ class Tank
 
   place_on_map: [3, 1]  # [x, y]
 
-  constructor: (@id)->
+  constructor: (@id, @socket)->
 
   ## return yes is tank was moved or one of property changed
   move: ->
@@ -32,7 +33,9 @@ class Tank
       return no
 
     if @health <= 0
-      if @respawn_i == 0 then @health = 9
+      if @respawn_i == 0
+        @health = 9
+        return yes
       @respawn_i = @respawn_i - 1
       return no
     if @wait > 0
@@ -91,6 +94,17 @@ class Tank
       @demage_obtained += demage
       if @health == 0
         @respawn_i = @respawn_after
+
+        # rewark or demand tank who destroy me
+        if @speed < tank.speed and tank.speed > 1
+            tank.speed = tank.speed - 1
+            tank.health += 1
+        else if @speed > tank.speed and tank.speed < controller.tankMaxSpeed() then tank.speed = tank.speed + 1
+        else if tank.speed > 1 then tank.speed = tank.speed - 1
+
+        # demand my tank
+        if @speed < controller.tankMaxSpeed() then @speed = @speed + 1
+
         return "destroy"
       return demage
     return 0
@@ -106,6 +120,7 @@ class Tank
               @place_on_map
               @damage_inflicted
               @demage_obtained
-              @destroyed]
+              @destroyed
+              @speed]
 
 module.exports = Tank

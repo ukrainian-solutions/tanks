@@ -15,20 +15,23 @@ class Controller
 
   getNewTankId: ->
     @tank_last_id = @tank_last_id + 1
-    return @tank_id_prefixes[Math.floor (Math.random() * @tank_id_prefixes.length)]+@tank_last_id
+    return @tank_id_prefixes[Math.floor (Math.random() * @tank_id_prefixes.length)] + @tank_last_id
 
-  appendTank: (tank)-> @tanks.push tank
+  appendTank: (tank)->
+    @tanks.push tank
+    @io.sockets.emit 'tanks', [tank.toJson()]
+
   removeTank: (tank_to_remove)-> @tanks_to_remove.push tank_to_remove.id
 
   whatOnTile: (x,y)->
-    console.log 'tanks', @tanks
+    console.log 'tanks count', @tanks.length
     for tank in @tanks
       if tank.place_on_map[0] is x and tank.place_on_map[1] == y
         return ['tank', tank]
     # for bullet in @bullets then if bullet.place_on_map == [x,y] then return ['bullet', bullet]
     return no
 
-  tankMaxSpeed: -> Math.round 1000/@mainLoop_timeout
+  tankMaxSpeed: -> Math.round(1000/@mainLoop_timeout)-1
 
   mainLoop: =>
     if @tanks_to_remove.length > 0
@@ -36,7 +39,9 @@ class Controller
       new_tanks = []
       for tank in @tanks
         if tank.id not in @tanks_to_remove then new_tanks.push tank
-        else console.log 'tank removed', tank.id
+        else
+          @io.sockets.emit 'removeTank', tank.id
+          console.log 'tank removed', tank.id
       @tanks = new_tanks
       @tanks_to_remove = []
 
@@ -44,6 +49,11 @@ class Controller
     tanks_demaged_objects = []
     tanks_demaged_list = []
     for tank in @tanks
+      if tank.socket != "bot" and not tank.socket?.connected
+        console.log 'found disconnected tank', tank
+        io.sockets.emit 'removeTank', tank.id
+        tank = undefined
+
       if tank == undefined then continue
       tank_move = tank.move()
       if tank.id in tanks_demaged_list
@@ -56,9 +66,10 @@ class Controller
         tanks_demaged_objects.push tank_move[1]
       tanks.push tank.toJson()
 
-    console.log 'Tanks demaged list:', tanks_demaged_list, tanks_demaged_objects
-    for tank in tanks_demaged_objects
-      if tank.id in tanks_demaged_list then tanks.push tank.toJson()
+    if tanks_demaged_list.length > 0
+      console.log 'Tanks demaged list:', tanks_demaged_list, tanks_demaged_objects
+      for tank in tanks_demaged_objects
+        if tank.id in tanks_demaged_list then tanks.push tank.toJson()
 
     if tanks.length > 0 then @io.sockets.emit 'tanks', tanks
 

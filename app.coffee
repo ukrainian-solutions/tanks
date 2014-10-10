@@ -19,7 +19,8 @@ app.use '/', express.static(__dirname + '/frontend')
 directions = ['left', 'right', 'up', 'down']
 
 
-bot1 = new Tank controller.getNewTankId()
+bot1 = new Tank controller.getNewTankId(), 'bot'
+bot1.speed = 2
 controller.appendTank bot1
 setInterval ->
   bot1.direction = directions[Math.floor (Math.random() * 4)]
@@ -30,7 +31,7 @@ io.on 'connection', (socket)=>
 
   socket.on 'addTank', (fn)->
     if socket.tank then return fn no
-    socket.tank = new Tank controller.getNewTankId()
+    socket.tank = new Tank controller.getNewTankId(), socket
 
     not_placed = yes
     while not_placed
@@ -42,10 +43,7 @@ io.on 'connection', (socket)=>
         controller.appendTank socket.tank
     fn socket.tank.toJson()
 
-  socket.on 'disconnect', ->
-    if socket.tank != undefined
-      io.sockets.emit 'tankDestroy', socket.tank.id
-      controller.removeTank socket.tank
+  socket.on 'disconnect', -> if socket.tank != undefined then controller.removeTank socket.tank
 
   socket.on 'map', (fn)->
     console.log 'map'
@@ -57,16 +55,13 @@ io.on 'connection', (socket)=>
       tanks.push tank.toJson()
     fn(tanks)
 
-  socket.on 'setDirection', (direction, is_hold)->
+  socket.on 'setDirection', (direction, is_hold)-> if socket.tank
     console.log 'setDirection', direction, is_hold
     if direction in ['left', 'right', 'up', 'down'] and is_hold in [yes, no]
       console.log 'yes'
       socket.tank.direction = direction
       socket.tank.is_hold = is_hold
     else console.log 'no'
-
-  socket.on 'setSpeed', (speed)->
-    socket.tank.speed = speed
 
   socket.on 'start', ->
     controller.start()
