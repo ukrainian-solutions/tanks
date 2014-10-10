@@ -1,3 +1,5 @@
+map = require './map'
+
 class Controller
   io: no
   tanks: []
@@ -6,7 +8,7 @@ class Controller
   boosts: []
 
   tanks_timeout: no
-  is_started: no
+  is_started: yes
   mainLoop_timeout: 150
 
   tank_last_id: 0
@@ -55,6 +57,12 @@ class Controller
         return ['tank', tank]
     # for bullet in @bullets then if bullet.place_on_map == [x,y] then return ['bullet', bullet]
     return no
+
+  getFreeRandomTile: -> while yes
+      x = Math.floor (Math.random() * map.maxX())
+      y = Math.floor (Math.random() * map.maxY())
+      if map.getTile(x, y) is 0 and @whatOnTile(x, y) is no
+        return [x,y]
 
   tankMaxSpeed: -> Math.round(1000/@mainLoop_timeout)-1
 

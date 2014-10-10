@@ -3,7 +3,7 @@ app = express()
 server = require('http').Server app
 io = require('socket.io') server
 map = require './backend/map'
-boost = require './backend/boost'
+Boost = require './backend/boost'
 controller = require './backend/controller'
 controller.io = io
 Tank = require './backend/tank'
@@ -17,11 +17,23 @@ app.use '/bower', express.static(__dirname + '/bower_components')
 app.use '/', express.static(__dirname + '/frontend')
 
 
-directions = ['left', 'right', 'up', 'down']
+
+
+boosts_enabled = ['speedUP', 'healthUP']
+setInterval ->
+  if controller.boosts.length > 3 then return
+  switch boosts_enabled[Math.floor(Math.random()*boosts_enabled.length)]
+    when "speedUP"
+      boost = new Boost.speedUP controller.getFreeRandomTile()
+    when "healthUP"
+      boost = new Boost.healthUP controller.getFreeRandomTile()
+  controller.appendBoost boost
+, 10000
 
 
 bot1 = new Tank controller.getNewTankId(), 'bot'
 controller.appendTank bot1
+directions = ['left', 'right', 'up', 'down']
 setInterval ->
   bot1.direction = directions[Math.floor (Math.random() * 4)]
   bot1.is_hold = no
@@ -35,8 +47,8 @@ io.on 'connection', (socket)=>
 
     not_placed = yes
     while not_placed
-      x = Math.floor (Math.random() * map.maxX()) + 1
-      y = Math.floor (Math.random() * map.maxY()) + 1
+      x = Math.floor (Math.random() * map.maxX())
+      y = Math.floor (Math.random() * map.maxY())
       if map.getTile(x, y) is 0 and controller.whatOnTile(x, y) is no
         not_placed = no
         socket.tank.place_on_map = [x,y]
@@ -68,8 +80,3 @@ io.on 'connection', (socket)=>
 
   socket.on 'stop', ->
     controller.stop()
-
-  socket.on 'addBoost', (type, place_on_map)->
-    if type == "health"
-      controller.appendBoost new boost.healthUP place_on_map
-    else controller.appendBoost new boost.speedUP place_on_map
