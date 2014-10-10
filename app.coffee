@@ -19,10 +19,10 @@ app.use '/', express.static(__dirname + '/frontend')
 directions = ['left', 'right', 'up', 'down']
 
 
-bot1 = new Tank 0
+bot1 = new Tank controller.getNewTankId()
 controller.appendTank bot1
 setInterval ->
-  bot1.direction = directions[Math.floor (Math.random() * 5)]
+  bot1.direction = directions[Math.floor (Math.random() * 4)]
   bot1.is_hold = no
 , 2000
 
@@ -30,7 +30,7 @@ io.on 'connection', (socket)=>
 
   socket.on 'addTank', (fn)->
     if socket.tank then return fn no
-    socket.tank = new Tank controller.tanksCount()
+    socket.tank = new Tank controller.getNewTankId()
 
     not_placed = yes
     while not_placed
