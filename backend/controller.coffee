@@ -35,6 +35,7 @@ class Controller
     @io.sockets.emit 'newBoost', boost.toJson()
 
   removeBoost: (boost_to_remove)->
+    @io.sockets.emit 'removeBoost', boost_to_remove.toJson()
     boosts = []
     for boost in @boosts
       if boost.id == boost_to_remove.id then continue
