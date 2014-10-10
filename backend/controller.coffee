@@ -1,6 +1,7 @@
 class Controller
   io: no
   tanks: []
+  tanks_to_remove: []
   bullets: []
 
   tanks_timeout: no
@@ -11,11 +12,8 @@ class Controller
 
   tanksCount: => @tanks.length
   appendTank: (tank)-> @tanks.push tank
-  removeTank: (tank_to_delete)->
-    new_tanks = []
-    for tank in @tanks
-      if tank.id != tank_to_delete.id then new_tanks.push tank
-    @tanks = new_tanks
+  removeTank: (tank_to_remove)->
+    @tanks_to_remove.push tank_to_remove.id
 
   whatOnTile: (x,y)->
     console.log 'tanks', @tanks
@@ -28,6 +26,13 @@ class Controller
   tankMaxSpeed: -> Math.round 1000/@mainLoop_timeout
 
   mainLoop: =>
+    if @tanks_to_remove.length > 0
+      new_tanks = []
+      for tank in @tanks
+        if not tank.id in @tanks_to_remove then new_tanks.push tank
+      @tanks = new_tanks
+      @tanks_to_remove = []
+
     tanks = []
     tanks_demaged_objects = []
     tanks_demaged_list = []
