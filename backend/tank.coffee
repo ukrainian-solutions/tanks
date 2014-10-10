@@ -75,14 +75,13 @@ class Tank
       return yes
     else
       if on_map[0] == 'tank'
-        console.log 'founded tank! DO DEMAGE!'
         demage = on_map[1].demage(@)
         if demage is "destroy"
           @destroyed += 1
           @health += 2
         else @damage_inflicted = demage
         @is_hold = yes
-        return yes
+        return [yes, on_map[1]]
 
   demage: (tank)->
     console.log @id, 'was demaged by ', tank.id

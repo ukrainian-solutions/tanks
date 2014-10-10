@@ -29,10 +29,25 @@ class Controller
 
   mainLoop: =>
     tanks = []
+    tanks_demaged_objects = []
+    tanks_demaged_list = []
     for tank in @tanks
       if tank == undefined then continue
-      tank.move()
+      tank_move = tank.move()
+      if tank.id in tanks_demaged_list
+        tanks_demaged_list[tank.id] = undefined
+      else if tank_move is no then continue
+
+      if tank_move[1] != undefined  # if other tank demaged here may be link to this tank object
+        console.log 'add to demaged tanks list'
+        tanks_demaged_list.push tank_move[1].id
+        tanks_demaged_objects.push tank_move[1]
       tanks.push tank.toJson()
+
+    console.log 'Tanks demaged list:', tanks_demaged_list, tanks_demaged_objects
+    for tank in tanks_demaged_objects
+      if tank.id in tanks_demaged_list then tanks.push tank.toJson()
+
     @io.sockets.emit 'tanks', tanks
     if @is_started then setTimeout @mainLoop, @mainLoop_timeout
 
