@@ -48,7 +48,8 @@ class Controller
     for tank in tanks_demaged_objects
       if tank.id in tanks_demaged_list then tanks.push tank.toJson()
 
-    @io.sockets.emit 'tanks', tanks
+    if tanks.length > 0 then @io.sockets.emit 'tanks', tanks
+
     if @is_started then setTimeout @mainLoop, @mainLoop_timeout
 
   start: ->
