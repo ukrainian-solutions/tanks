@@ -3,6 +3,7 @@ class Controller
   tanks: []
   tanks_to_remove: []
   bullets: []
+  boosts: []
 
   tanks_timeout: no
   is_started: no
@@ -18,10 +19,15 @@ class Controller
     return @tank_id_prefixes[Math.floor (Math.random() * @tank_id_prefixes.length)] + @tank_last_id
 
   appendTank: (tank)->
+    tank.speed = 3
     @tanks.push tank
     @io.sockets.emit 'tanks', [tank.toJson()]
 
   removeTank: (tank_to_remove)-> @tanks_to_remove.push tank_to_remove.id
+
+  appendBoost: (boost)->
+    @boosts.appendBoost boost
+    @io.sockets.emit 'newBoost', @boost.toJson()
 
   whatOnTile: (x,y)->
     console.log 'tanks count', @tanks.length

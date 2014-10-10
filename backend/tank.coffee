@@ -94,20 +94,29 @@ class Tank
       @demage_obtained += demage
       if @health == 0
         @respawn_i = @respawn_after
-
         # rewark or demand tank who destroy me
         if @speed < tank.speed and tank.speed > 1
             tank.speed = tank.speed - 1
             tank.health += 1
-        else if @speed > tank.speed and tank.speed < controller.tankMaxSpeed() then tank.speed = tank.speed + 1
-        else if tank.speed > 1 then tank.speed = tank.speed - 1
+            tank.sendInfo 'victory', ["speedUP-#{tank.speed}", 'healthUP']
+        else if @speed > tank.speed and tank.speed < controller.tankMaxSpeed()
+          tank.speed = tank.speed + 1
+          tank.sendInfo 'victory', ["speedDOWN-#{tank.speed}"]
+        else if tank.speed > 1
+          tank.speed = tank.speed - 1
+          tank.sendInfo 'victory', ["speedUP-#{tank.speed}"]
 
         # demand my tank
-        if @speed < controller.tankMaxSpeed() then @speed = @speed + 1
+        if @speed < controller.tankMaxSpeed()
+          @speed = @speed + 1
+          @sendInfo 'defeated', ["speedDOWN-#{@speed}"]
 
         return "destroy"
       return demage
     return 0
+
+  sendInfo: (type, value)-> if @socket != "bot" and @socket.connected
+    @socket.emit 'info', [type, value]
 
 
   toJson: -> [@id

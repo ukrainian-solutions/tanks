@@ -20,7 +20,6 @@ directions = ['left', 'right', 'up', 'down']
 
 
 bot1 = new Tank controller.getNewTankId(), 'bot'
-bot1.speed = 2
 controller.appendTank bot1
 setInterval ->
   bot1.direction = directions[Math.floor (Math.random() * 4)]
