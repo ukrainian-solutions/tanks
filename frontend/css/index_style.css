@@ -2,37 +2,17 @@
     float: left;
     width: 20px;
     height: 20px;
-    margin: 2px;
-    border: 1px solid gray;
     padding: 10px;
     background: greenyellow;
 }
 .water {
-    float: left;
-    width: 20px;
-    height: 20px;
-    margin: 2px;
-    border: 1px solid gray;
-    padding: 10px;
     background: blue;
 }
 .wall {
-    float: left;
-    width: 20px;
-    height: 20px;
-    margin: 2px;
-    border: 1px solid gray;
-    padding: 10px;
     background: #151612;
 }
 
 .grass {
-    float: left;
-    width: 20px;
-    height: 20px;
-    margin: 2px;
-    border: 1px solid gray;
-    padding: 10px;
     background: green;
 }
 
@@ -41,8 +21,6 @@
     background: url('/images/tank2.png');
     width: 20px;
     height: 20px;
-    margin: 2px;
-    border: 1px solid gray;
     padding: 10px;
     color: black;
     font-size: 40px;
@@ -55,8 +33,6 @@
     background: url('/images/my_tank.png');
     width: 20px;
     height: 20px;
-    margin: 2px;
-    border: 1px solid gray;
     padding: 10px;
     color: black;
     font-size: 40px;

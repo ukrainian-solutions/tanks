@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
     var my_tank = 0;
+    var start = false;
+    var stop = true;
     var map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
@@ -40,7 +42,7 @@ $(document).ready(function() {
                 if(map[x][y] == 1) {
                     $('<div/>', {
                         id: 'box',
-                        'class': 'wall',
+                        'class': 'box wall',
                         'data-x': x,
                         'data-y': y
                     }).appendTo('body');
@@ -49,7 +51,7 @@ $(document).ready(function() {
                 if(map[x][y] == 3){
                     $('<div/>', {
                         id: 'box',
-                        'class': 'grass',
+                        'class': 'box grass',
                         'data-x': x,
                         'data-y': y
                     }).appendTo('body');
@@ -57,7 +59,7 @@ $(document).ready(function() {
                 if(map[x][y] == 4){
                     $('<div/>', {
                         id: 'box',
-                        'class': 'water',
+                        'class': 'box water',
                         'data-x': x,
                         'data-y': y
                     }).appendTo('body');
@@ -83,7 +85,7 @@ $(document).ready(function() {
                 "health": tank_json[6],
                 "place_on_map": tank_json[7]
               };
-            };
+            }
             console.log('this is tank', tank_json);
             my_tank = tank_json['id'];
             draw_tank(tank_json)
@@ -104,7 +106,7 @@ $(document).ready(function() {
             "health": tank_json[6],
             "place_on_map": tank_json[7]
           };
-        };
+        }
         var y = tank_json['place_on_map'][0];
         var x = tank_json['place_on_map'][1];
         var div = $('*[data-x='+x.toString()+'][data-y='+ y.toString()+']');
@@ -142,7 +144,7 @@ $(document).ready(function() {
             "health": tank_json[6],
             "place_on_map": tank_json[7]
           };
-        };
+        }
         var tank = $('[data-id_tank='+tank_json['id']+']');
         tank.html('');
         if(tank_json['id'] == my_tank) {
@@ -208,5 +210,20 @@ $(document).ready(function() {
     });
 
 
+    $('#start').bind('click', function() {
+        if(!start) {
+            console.log('start');
+            socket.emit('start');
+            stop = false
+        }
+    });
+
+    $('#stop').bind('click', function() {
+        if(!stop) {
+            console.log('stop');
+            socket.emit('stop');
+            start = false
+        }
+    })
 
 });
