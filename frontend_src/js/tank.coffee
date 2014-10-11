@@ -15,7 +15,7 @@ class Tank
 
 
   convert: (tank_json) ->
-    console.log('tank_json', tank_json)
+#    console.log('tank_json', tank_json)
     if tank_json['id'] == undefined
       tank_json =
         'id': tank_json[0]
@@ -26,6 +26,10 @@ class Tank
         'bullets_max': tank_json[5]
         'health': tank_json[6]
         'place_on_map': tank_json[7]
+        'damage_inflicted': tank_json[8]
+        'demage_obtained': tank_json[9]
+        'destroyed': tank_json[10]
+        'speed': tank_json[11]
     else
       console.log tank_json
       return tank_json
@@ -67,3 +71,16 @@ class Tank
     tank.removeClass('up')
     tank.addClass('box')
     @draw_tank(tank_json)
+
+  tank_stats: (tank) ->
+    console.log 'tank_stats', tank
+    table = $('.tank_stats')
+    list_stats = ['id', 'damage_inflicted', 'demage_obtained', 'destroyed']
+    div_tr = $('<tr/>', {
+          id: 'tr_'+tank['id'],
+    }).appendTo table
+    for stat in list_stats
+      div_td = $('<td/>', {
+          id: "td_#{tank[stat]}"
+      }).appendTo div_tr
+      div_td.html(tank[stat])
