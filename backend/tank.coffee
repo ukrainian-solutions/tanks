@@ -126,6 +126,7 @@ class Tank
 
   addBullet: (bullet)->
     @bullets.push bullet
+    @socket.emit 'addBullet', bullet.toJson()
 
   fire: (bullet_id)->
     new_bullets = []
