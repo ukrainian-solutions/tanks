@@ -25,7 +25,7 @@ gulp.task 'coffee', ->
   .pipe(gulp.dest('./frontend'))
 
 gulp.task 'concat', () ->
-  gulp.src(['./frontend_src/js/tank.coffee', './frontend_src/js/boost.coffee', './frontend_src/js/map.coffee', './frontend_src/js/controller.coffee'])
+  gulp.src(['./frontend_src/js/tank.coffee', './frontend_src/js/boost.coffee', './frontend_src/js/map.coffee', './frontend_src/js/bullet.coffee','./frontend_src/js/controller.coffee'])
     .pipe(concat('index.coffee'))
     .pipe(gulp.dest('./frontend_src/js/all/'))
 
