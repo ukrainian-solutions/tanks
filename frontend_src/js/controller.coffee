@@ -7,6 +7,9 @@ $ ->
     39: 'right'
     40: 'down'
 
+  direct = 'up'
+  stay = false
+
   Boost = new Boost()
   Map = new Map()
   Tank = new Tank()
@@ -32,7 +35,10 @@ $ ->
 
   $('html').keydown( (eventObject) ->
 #    console.log('key code', key_code[event.keyCode])
-    socket.emit('setDirection', key_code[event.keyCode], false)
+    direct = if key_code[event.keyCode] then key_code[event.keyCode] else direct
+    stay = if event.keyCode == 81 then true else stay
+    stay = if event.keyCode == 87 then false else stay
+    return socket.emit('setDirection', direct , stay)
   )
 
   socket.on('tanks', (tanks) ->
@@ -40,6 +46,7 @@ $ ->
     for tank in tanks
       tank = Tank.convert(tank)
       Tank.move_tank(tank)
+#      Tank.tank_stats(tank)
   )
 
   socket.on('info', (logg) ->
@@ -56,5 +63,4 @@ $ ->
     for tank in tanks_json
       tank = Tank.convert(tank)
       Tank.draw_tank(tank)
-
   )
