@@ -89,11 +89,40 @@
     -o-transform: rotate(270deg);
     transform: rotate(270deg);
 }
-
 .tank_stats {
-    width: 400px;
-    height: 400px;
+    width: auto;
+    height: auto;
     position: absolute;
-    right: 0;
-    border: 1px solid red;
+    right: 10px;
+    background: rgba(243, 226, 242, 0.60);
+    border-radius: 20px;
+    box-shadow: 10px 10px 5px #888888;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    padding: 5px;
+    text-align: center;
+
+}
+.tank_stats th {
+    margin-left: 10px;
+    text-align: center;
+    color: #131313;
+    font: "Times New Roman";
+    font-weight: bold;
+    font-size: 23px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.52);
+}
+
+.tank_stats td {
+    text-align: center;
+    color: #131313;
+    font-size: 18px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.52);
+}
+
+.tank_stats td:last-child {
+    text-align: center;
+    color: #131313;
+    font-size: 18px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.52);
 }
