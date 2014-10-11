@@ -93,5 +93,7 @@
 .tank_stats {
     width: 400px;
     height: 400px;
-    float: right;
+    position: absolute;
+    right: 0;
+    border: 1px solid red;
 }
