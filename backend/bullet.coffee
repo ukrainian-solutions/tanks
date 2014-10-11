@@ -5,13 +5,14 @@ class Bullet
 
   id: no
   tank: no
+  type: ""
   is_on_fly: no
   place_on_map: no
   direction: no
 
   speed: 0
   speed_i: 0
-  demage: 1
+  demage: 0
 
 
   constructor: (@tank)->
@@ -75,6 +76,7 @@ class Bullet
     return no
 
   toJson: -> [@id
+              @type
               @tank.id
               @is_on_fly
               @place_on_map
@@ -83,8 +85,16 @@ class Bullet
               @demage]
 
 
+exports.light = class LightBullet extends Bullet
+  type: "light"
+  demage: 1
 
+exports.big = class BigBullet extends Bullet
+  type: "big"
+  demage: 3
 
-
+exports.super = class SuperBullet extends Bullet
+  type: "suepr"
+  demage: 10
 
 exports.bullet = Bullet
