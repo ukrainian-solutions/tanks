@@ -19,7 +19,7 @@ class Tank
   speed: controller.tankMaxSpeed()
   speed_i: 0
 
-  damage_inflicted: 0
+  demage_inflicted: 0
   demage_obtained: 0
   destroyed: 0
 
@@ -32,11 +32,13 @@ class Tank
     if @speed_i > 0
       @speed_i--
       return no
-    console.log @id, "DO TANK MOVE!"
+
     if @health <= 0
+      console.log 'min health. do reheal'
       if @respawn_i == 0
         @health = 9
         return yes
+      if @respawn_i < -1 then @respawn_i = @respawn_after
       @respawn_i = @respawn_i - 1
       return no
     if @wait > 0
@@ -155,7 +157,7 @@ class Tank
               @bullets_max
               @health
               @place_on_map
-              @damage_inflicted
+              @demage_inflicted
               @demage_obtained
               @destroyed
               @speed]

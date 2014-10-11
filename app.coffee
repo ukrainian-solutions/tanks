@@ -80,8 +80,14 @@ io.on 'connection', (socket)=>
     console.log 'Do fire!'
     socket.tank.fire bullet_id
 
+  socket.on 'boosts', (fn)->
+    boosts = []
+    for boost in controller.boosts
+      boosts.push boost.toJson()
+    fn boosts
+
   socket.on 'giveMeBullet', (fn)-> if socket.tank
-    bullet = new Bullet.bullet socket.tank
+    bullet = new Bullet.super socket.tank
     socket.tank.addBullet bullet
     console.log 'bullet given', bullet.id
     fn bullet.id

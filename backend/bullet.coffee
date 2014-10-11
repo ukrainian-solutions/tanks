@@ -26,6 +26,7 @@ class Bullet
 
       tank.damage_obtained += tank.health
       tank.health = 0
+      tank.respawn_i = tank.respawn_after
       tank.sendInfo 'defeated', no
     else
       @tank.demage_inflicted += @demage
@@ -96,5 +97,3 @@ exports.big = class BigBullet extends Bullet
 exports.super = class SuperBullet extends Bullet
   type: "suepr"
   demage: 10
-
-exports.bullet = Bullet

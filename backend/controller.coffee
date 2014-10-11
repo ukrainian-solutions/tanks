@@ -125,7 +125,7 @@ class Controller
 
       if tank == undefined then continue
       tank_move = tank.move()
-      if tank.id in tanks_demaged_list
+      if tank.id in tanks_demaged_list or tank is yes
         tanks_demaged_list[tank.id] = undefined
       else if tank_move is no then continue
 
