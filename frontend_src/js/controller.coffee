@@ -33,6 +33,9 @@ $ ->
     Boost.remove_boost(boost)
   )
 
+  socket.on "newBullet", (a) -> console.log(a)
+  socket.on "removeBullet", (a) -> console.log(a)
+
   $('html').keydown( (eventObject) ->
 #    console.log('key code', key_code[event.keyCode])
     direct = if key_code[event.keyCode] then key_code[event.keyCode] else direct
@@ -46,7 +49,7 @@ $ ->
     for tank in tanks
       tank = Tank.convert(tank)
       Tank.move_tank(tank)
-#      Tank.tank_stats(tank)
+      Tank.tank_stats(tank)
   )
 
   socket.on('info', (logg) ->

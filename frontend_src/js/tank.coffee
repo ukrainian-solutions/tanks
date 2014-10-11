@@ -73,14 +73,19 @@ class Tank
     @draw_tank(tank_json)
 
   tank_stats: (tank) ->
-    console.log 'tank_stats', tank
     table = $('.tank_stats')
     list_stats = ['id', 'damage_inflicted', 'demage_obtained', 'destroyed']
-    div_tr = $('<tr/>', {
-          id: 'tr_'+tank['id'],
-    }).appendTo table
+    if $('#tr_'+tank['id']).length <= 0
+      div_tr = $('<tr/>', {
+            id: 'tr_'+tank['id'],
+      }).appendTo table
+    else
+      div_tr = $('#tr_'+tank['id'])
     for stat in list_stats
-      div_td = $('<td/>', {
-          id: "td_#{tank[stat]}"
-      }).appendTo div_tr
+      if $('#tr_'+tank['id'] + ' #td_'+stat).length <= 0
+        div_td = $('<td/>', {
+            id: 'td_'+stat
+        }).appendTo div_tr
+      else
+        div_td = $('#tr_'+tank['id'] + ' #td_'+stat)
       div_td.html(tank[stat])
