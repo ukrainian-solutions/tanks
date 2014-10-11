@@ -1,5 +1,6 @@
 map = require './map'
 controller = require './controller'
+bullet = require './bullet'
 
 class Tank
 
@@ -9,7 +10,7 @@ class Tank
   is_hold: yes  # yes if tank is not move
   wait: 0  # count turn no move
 
-  bullets: 0  # how many bullets in map now
+  bullets: []  # how many bullets in map now
   bullets_max: 3  # how many bullets can be on map
   health: 9  # if tank was shuted healts - 1. If ==0 tank is dead
   respawn_after: 50
@@ -31,7 +32,7 @@ class Tank
     if @speed_i > 0
       @speed_i--
       return no
-
+    console.log @id, "DO TANK MOVE!"
     if @health <= 0
       if @respawn_i == 0
         @health = 9
@@ -89,6 +90,10 @@ class Tank
         @place_on_map = [x, y]
         on_map[1].use @
         return yes
+      if on_map[0] == 'bullet'
+        @place_on_map = [x, y]
+        # on_map[1].use @
+        return yes
 
   demage: (tank)->
     console.log @id, 'was demaged by ', tank.id
@@ -119,6 +124,24 @@ class Tank
       return demage
     return 0
 
+  addBullet: (bullet)->
+    @bullets.push bullet
+
+  fire: (bullet_id)->
+    new_bullets = []
+    fire_bullet = no
+    for bullet in @bullets
+      if bullet.id != bullet_id
+        new_bullets.push bullet
+        continue
+      fire_bullet = bullet
+    @bullets = new_bullets
+
+    if not fire_bullet then return no
+    fire_bullet.fire()
+    return fire_bullet
+
+
   sendInfo: (type, value)-> if @socket != "bot" and @socket.connected
     @socket.emit 'info', [type, value]
 
@@ -127,7 +150,7 @@ class Tank
               @direction
               @is_hold
               @wait
-              @bullets
+              @bullets.length
               @bullets_max
               @health
               @place_on_map

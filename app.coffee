@@ -4,6 +4,7 @@ server = require('http').Server app
 io = require('socket.io') server
 map = require './backend/map'
 Boost = require './backend/boost'
+Bullet = require './backend/bullet'
 controller = require './backend/controller'
 controller.io = io
 Tank = require './backend/tank'
@@ -35,8 +36,8 @@ bot1 = new Tank controller.getNewTankId(), 'bot'
 controller.appendTank bot1
 directions = ['left', 'right', 'up', 'down']
 setInterval ->
-  bot1.direction = directions[Math.floor (Math.random() * 4)]
-  bot1.is_hold = no
+  # bot1.direction = directions[Math.floor (Math.random() * 4)]
+  bot1.is_hold = yes
 , 2000
 
 io.on 'connection', (socket)=>
@@ -74,5 +75,15 @@ io.on 'connection', (socket)=>
       socket.tank.direction = direction
       socket.tank.is_hold = is_hold
     else console.log 'no'
+
+  socket.on 'fire', (bullet_id)-> if socket.tank
+    console.log 'Do fire!'
+    socket.tank.fire bullet_id
+
+  socket.on 'giveMeBullet', (fn)-> if socket.tank
+    bullet = new Bullet.bullet socket.tank
+    socket.tank.addBullet bullet
+    console.log 'bullet given', bullet.id
+    fn bullet.id
 
 controller.start()

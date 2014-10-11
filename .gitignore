@@ -29,4 +29,6 @@ node_modules
 bower_components
 
 # Js folder
-frontend/**/*.js
+frontend/*/*.js
+frontend/*/*/*.js
+frontend_src/js/all/*
