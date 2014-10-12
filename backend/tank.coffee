@@ -103,6 +103,7 @@ class Tank
       demage = 1
       @health = @health - demage
       @demage_obtained += demage
+      tank.demage_inflicted += demage
       if @health == 0
         @respawn_i = @respawn_after
         # rewark or demand tank who destroy me

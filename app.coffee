@@ -18,16 +18,23 @@ app.use '/bower', express.static(__dirname + '/bower_components')
 app.use '/', express.static(__dirname + '/frontend')
 
 
-boosts_enabled = ['speedUP', 'healthUP', 'mystery']
+boosts_enabled = ['speedUP', 'healthUP', 'mystery', 'bulletLight', 'bulletBig', 'bulletSuper']
 setInterval ->
   if controller.boosts.length > 3 then return
+  tile = controller.getFreeRandomTile()
   switch boosts_enabled[Math.floor(Math.random()*boosts_enabled.length)]
     when "speedUP"
-      boost = new Boost.speedUP controller.getFreeRandomTile()
+      boost = new Boost.speedUP tile
     when "healthUP"
-      boost = new Boost.healthUP controller.getFreeRandomTile()
+      boost = new Boost.healthUP tile
     when "mystery"
-      boost = new Boost.mystery controller.getFreeRandomTile()
+      boost = new Boost.mystery tile
+    when "bulletLight"
+      boost = new Boost.bulletLight tile
+    when "bulletBig"
+      boost = new Boost.bulletBig tile
+    when "bulletSuper"
+      boost = new Boost.bulletSuper tile
   controller.appendBoost boost
 , 10000
 

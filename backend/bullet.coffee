@@ -95,5 +95,5 @@ exports.big = class BigBullet extends Bullet
   demage: 3
 
 exports.super = class SuperBullet extends Bullet
-  type: "suepr"
+  type: "super"
   demage: 10
